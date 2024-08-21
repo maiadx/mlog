@@ -1,4 +1,4 @@
-# Basic Rust Logger
+# Rust Logger
 
 Supports varying log levels, colorized output, and optional file logging. 
 The logger is designed for single-threaded usage for the moment but will include multithreaded support soon
