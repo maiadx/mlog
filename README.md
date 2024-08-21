@@ -1,9 +1,7 @@
 # `mlog` - Rust Logger
 
 ## Features
-
 Supports varying log levels, colorized output, and optional file logging. 
-
   
 ## Log Level Colors
 | Log Level |  Text Color  | Bg Color |
@@ -16,7 +14,7 @@ Supports varying log levels, colorized output, and optional file logging.
 
 
 ## Missing Features
-What's missing: currently designed for single-threaded program performance but lacks the ability to be used accross threads, & further optimization to make it fast
+What's missing: currently designed for single-threaded program performance but lacks the ability to be used accross threads safely, & further optimization to make it fast
 
 
 ## Usage 
