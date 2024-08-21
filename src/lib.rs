@@ -84,7 +84,7 @@ impl LogConfig {
 
 
 #[allow(dead_code)]
-struct Logger {
+pub struct Logger {
     level : LogLevel,
     config : LogConfig,
 }
