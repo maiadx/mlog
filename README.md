@@ -18,7 +18,7 @@ The logger is designed for single-threaded usage for the moment but will include
 | Crit      | Bold White          | Red              |
 | Success   | Bold White          | Green            |
 
-## Usage
+## Usage (may only work on unix systems) -- will be including windows color support in future
 
 ```rust
 
