@@ -1,0 +1,33 @@
+
+
+----------------------------------------------------------
+///////// Session Started at 2024-08-21 21:42:49 ///////// 
+----------------------------------------------------------
+
+[34m[21:42:49] - Info - This is an info msg.[0m
+[01;33m[21:42:49] - Warn - This is a warning msg.[0m
+[1;31m[21:42:49] - Error - This is an error msg.[0m
+[97m[41m[21:42:49] - Crit - This is a critical msg.[0m
+[97m[42m[21:42:49] - Success - This is a successful msg :)[0m
+
+
+----------------------------------------------------------
+///////// Session Started at 2024-08-21 21:43:22 ///////// 
+----------------------------------------------------------
+
+[34m[21:43:22] - Info - This is an info msg.[0m
+[01;33m[21:43:22] - Warn - This is a warning msg.[0m
+[1;31m[21:43:22] - Error - This is an error msg.[0m
+[97m[41m[21:43:22] - Crit - This is a critical msg.[0m
+[97m[42m[21:43:22] - Success - This is a successful msg :)[0m
+
+
+----------------------------------------------------------
+///////// Session Started at 2024-08-21 16:46:05 ///////// 
+----------------------------------------------------------
+
+[34m[16:46:05] - Info - This is an info msg.[0m
+[01;33m[16:46:05] - Warn - This is a warning msg.[0m
+[1;31m[16:46:05] - Error - This is an error msg.[0m
+[97m[41m[16:46:05] - Crit - This is a critical msg.[0m
+[97m[42m[16:46:05] - Success - This is a successful msg :)[0m

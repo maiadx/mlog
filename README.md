@@ -1,21 +1,23 @@
-# Rust Logger
-
-Supports varying log levels, colorized output, and optional file logging. 
-The logger is designed for single-threaded usage for the moment but will include multithreaded support soon
+# `mlog` - Rust Logger
 
 ## Features
 
-- **Log Levels**: `Info`, `Warn`, `Error`, `Crit`, `Success`
+Supports varying log levels, colorized output, and optional file logging. 
 
   
-## Log Level Colors (may only work on unix systems)
-| Log Level | Text Color          | Background Color |
-|-----------|---------------------|------------------|
-| Info      | Blue                | None             |
-| Warn      | Yellow              | None             |
-| Error     | Red                 | None             |
-| Crit      | Bold White          | Red              |
-| Success   | Bold White          | Green            |
+## Log Level Colors
+| Log Level |  Text Color  | Bg Color |
+|-----------|--------------|----------|
+| Info      | Blue         | None     |
+| Warn      | Yellow       | None     |
+| Error     | Red          | None     |
+| Crit      | Bold White   | Red      |
+| Success   | Bold White   | Green    |
+
+
+## Missing Features
+What's missing: currently designed for single-threaded program performance but lacks the ability to be used accross threads, & further optimization to make it fast
+
 
 ## Usage 
 
