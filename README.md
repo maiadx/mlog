@@ -27,11 +27,12 @@ warn!("This is a warning.");
 error!("This is an error.");
 crit!("Critical error, application will terminate.");
 success!("Operation successful!");
+````
 
 ### Initialization
 
-You can initialize the logger with a minimum log level and optional file logging.
+You can initialize logger with any log level
 
 ```rust
 init(LogLevel::Info, Some("logfile_name"));  // Creates "logfile_name.log"
-
+````
