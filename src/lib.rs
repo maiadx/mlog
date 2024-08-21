@@ -48,8 +48,29 @@ impl LogConfig {
                 format!("{}.log", path)
             };
 
-            let file = OpenOptions::new().append(true).create(true).open(log_file_name).unwrap();
-            UnsafeCell::new(Some(BufWriter::new(file)))
+            // check if file exists before opening
+            // let file_exists: bool = std::path::Path::new(&log_file_name).exists();
+
+            // open file
+            let file = OpenOptions::new()
+                .append(true)
+                .create(true)
+                .open(&log_file_name)
+                .unwrap();
+
+            let mut writer = BufWriter::new(file);
+
+            // session info
+            writeln!(
+                writer,
+                "\n\n----------------------------------------------------------\n///////// Session Started at {} ///////// \n----------------------------------------------------------\n",
+                Local::now().format("%Y-%m-%d %H:%M:%S")
+            )
+            .unwrap();
+            writer.flush().unwrap(); 
+            
+
+            UnsafeCell::new(Some(writer))
         });
 
         LogConfig { file }
