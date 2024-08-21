@@ -1,0 +1,10 @@
+[34m[15:18:18] - Info - This is an info msg.[0m
+[01;33m[15:18:18] - Warn - This is a warning msg.[0m
+[1;31m[15:18:18] - Error - This is an error msg.[0m
+[97m[41m[15:18:18] - Crit - This is a critical msg.[0m
+[97m[42m[15:18:18] - Success - This is a successful msg :)[0m
+[34m[15:19:14] - Info - This is an info msg.[0m
+[01;33m[15:19:14] - Warn - This is a warning msg.[0m
+[1;31m[15:19:14] - Error - This is an error msg.[0m
+[97m[41m[15:19:14] - Crit - This is a critical msg.[0m
+[97m[42m[15:19:14] - Success - This is a successful msg :)[0m
