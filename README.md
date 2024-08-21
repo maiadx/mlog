@@ -29,7 +29,7 @@ crit!("Critical error, application will terminate.");
 success!("Operation successful!");
 ````
 
-### Initialization
+## Initialization
 
 You can initialize logger with any log level
 
