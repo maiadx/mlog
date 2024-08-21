@@ -8,8 +8,7 @@ The logger is designed for single-threaded usage for the moment but will include
 - **Log Levels**: `Info`, `Warn`, `Error`, `Crit`, `Success`
 
   
-## Log Level Colors
-
+## Log Level Colors (may only work on unix systems)
 | Log Level | Text Color          | Background Color |
 |-----------|---------------------|------------------|
 | Info      | Blue                | None             |
@@ -18,7 +17,7 @@ The logger is designed for single-threaded usage for the moment but will include
 | Crit      | Bold White          | Red              |
 | Success   | Bold White          | Green            |
 
-## Usage (may only work on unix systems) -- will be including windows color support in future
+## Usage 
 
 ```rust
 
