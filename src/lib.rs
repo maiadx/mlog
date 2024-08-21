@@ -168,7 +168,7 @@ pub fn init(level: LogLevel, log_filepath: Option<&str>) {
 }
     
 #[allow(dead_code)]
-fn with_logger<F: FnOnce(&Logger)>(f: F) {
+pub fn with_logger<F: FnOnce(&Logger)>(f: F) {
     let logger_ptr = LOGGER.load(Ordering::SeqCst);
         unsafe {
             f(&*logger_ptr);
