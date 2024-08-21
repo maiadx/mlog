@@ -1,5 +1,0 @@
-[34m[2024-08-21 13:33:11.275] - Info - This is an info message.[0m
-[01;33m[2024-08-21 13:33:11.275] - Warn - This is a warning message.[0m
-[1;31m[2024-08-21 13:33:11.275] - Error - This is an error message.[0m
-[1;35m[2024-08-21 13:33:11.275] - Critical - This is a critical message.[0m
-[32m[2024-08-21 13:33:11.275] - Success - This is a success message.[0m
