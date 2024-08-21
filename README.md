@@ -20,7 +20,6 @@ The logger is designed for single-threaded usage for the moment but will include
 ## Usage 
 
 ```rust
-
 info!("This is an info message.");
 warn!("This is a warning.");
 error!("This is an error.");
