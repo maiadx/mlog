@@ -24,7 +24,7 @@ You can initialize logger with any log level, any lower priority logs will be au
 ```rust
 mlog::init(log_config);
 // ...
-mlog::shutdown(); // need to shutdown logger in order to ensure all log msgs are saved exiting.
+mlog::shutdown(); // need to shutdown logger safely before exiting.
 ````
 
 ## Configuration
