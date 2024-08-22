@@ -32,8 +32,8 @@ mod tests {
 
         info!("This is an info message.");
         warn!("This is a warning.");
-        error!("This is an error - ({})", 2);
-        crit!("This is a critical error.");
+        error!("Error Code : ({})", 2);
+        crit!("This is a critical error :/");
         success!("Operation successful :)");
 
         // panic!("aaaaaaaaa"); // implements panic hook
