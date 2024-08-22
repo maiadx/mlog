@@ -18,6 +18,10 @@ pub const CONSOLE_COLOR_RED: &str = "\x1b[1;31m";
 pub const CONSOLE_BG_COLOR_RED: &str = "\x1b[41m";
 pub const CONSOLE_BG_COLOR_GREEN: &str = "\x1b[42m";
 pub const CONSOLE_COLOR_RESET: &str = "\x1b[0m";
+pub const CONSOLE_COLOR_GREEN: &str = "\x1b[1;32m"; 
+pub const CONSOLE_COLOR_MAGENTA: &str = "\x1b[35m";    
+
+
 #[derive(Copy, Clone, Debug, PartialOrd, PartialEq)]
 pub enum LogLevel {
     Info = 0b11111,    // Everything
@@ -131,7 +135,6 @@ impl Logger {
                 }
             });
         }
-
         logger
     }
 
@@ -297,7 +300,7 @@ pub fn with_logger<F: FnOnce(&Logger)>(f: F) {
 #[macro_export]
 macro_rules! info {
     ($($arg:tt)*) => {
-        with_logger(|logger| logger.log(LogLevel::Info, &format!($($arg)*), CONSOLE_COLOR_BLUE));
+        with_logger(|logger| logger.log(LogLevel::Info, &format!($($arg)*), CONSOLE_COLOR_GREEN));
     };
 }
 
