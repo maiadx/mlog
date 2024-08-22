@@ -10,16 +10,16 @@ Implements std::panic_hook so any crash information will be saved according to y
 ## Usage 
 
 ```rust
-info!("This is an info message.");
+info!("This is an info msg.");
 warn!("This is a warning.");
-error!("This is an error.");
-crit!("Critical error, application will terminate.");
-success!("Operation successful!");
+error!("This is an error!");
+crit!("Critical error, uh oh.");
+success!("Operation successful! :)");
 ````
 
 ## Initialization
 
-You can initialize logger with any log level, any lower priority logs will be automatically removed
+You can initialize logger with any log level, any lower priority logs will be automatically suppressed.
 
 ```rust
 mlog::init(log_config);
