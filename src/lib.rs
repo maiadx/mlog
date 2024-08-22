@@ -275,7 +275,7 @@ pub fn init(config: LogConfig) {
         .compare_exchange(ptr::null_mut(), logger_ptr, Ordering::SeqCst, Ordering::SeqCst)
         .expect("Logger is already initialized!");
 
-    // init_panic_hook();
+    init_panic_hook();
 }
 
 

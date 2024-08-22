@@ -2,7 +2,7 @@
 
 ## Features
 Supports varying log levels, colorized output, optional file logging, async mode, multithreaded mode. 
-  
+Implements std::panic_hook so any crash information will be saved according to your configuration.
 ## Log Level Colors
 ![Example Image](./tests/test-example.png)
 
@@ -32,11 +32,11 @@ mlog::shutdown(); // need to shutdown logger safely before exiting.
 let log_config = LogConfig {
     log_level: LogLevel::Info,                 // defaults to logging Everything
     program_name: "application".to_string(),  
-    log_filepath: Some("logs/example"),      // filepath for logs (default : None uses console only)
+    log_filepath: Some("logs/example"),      // filepath for logs (default : None)
     console_flag: true,                     // toggle console logging
     async_flag: true,                     // async logger (default to false)
     multi_threaded_flag: true,           // single-threaded by default
-    time_format: "%Y-%m-%d %H:%M:%S%.3f".to_string(),  // fully customizable time format
+    time_format: "%Y-%m-%d %H:%M:%S%.3f".to_string(),  // customizable time format
 }
 ````
 

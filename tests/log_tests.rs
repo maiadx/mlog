@@ -12,10 +12,13 @@ use chrono::Local;
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[allow(unused)]
     fn get_test_log_path() -> String {
         format!("test_log_{}.log", Local::now().timestamp())
     }
     #[test]
+    #[allow(unreachable_code)]
+
     fn test_default() {
 
         let log_config = LogConfig {
@@ -33,7 +36,7 @@ mod tests {
         success!("Operation successful :)");
 
         // panic!("aaaaaaaaa"); // implements panic hook
-        
+
         shutdown();
         }
     

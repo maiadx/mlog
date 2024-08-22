@@ -14,7 +14,11 @@ debug = true
 opt-level = 3
 debug = false
 
-[profile.performance]
-inherits = "release"
-opt-level = 3
-debug = false
+# [profile.performance]
+# inherits = "release"
+# opt-level = 3
+# debug = false
+
+[features]
+default = []
+performance = []
