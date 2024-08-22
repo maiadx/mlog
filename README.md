@@ -20,6 +20,7 @@ success!("Operation successful! :)");
 ## Initialization
 
 You can initialize logger with any log level, any lower priority logs will be automatically suppressed.
+Priorities : Info (least) -> Success -> Warn -> Error -> Crit (highest priority)
 
 ```rust
 mlog::init(log_config);
