@@ -146,11 +146,6 @@ impl Logger {
             let mut file_writer = file_writer.lock().unwrap();
             writeln!(file_writer, "{}", log_msg).expect("Failed to write log to file");
             file_writer.flush().expect("Failed to flush log file");
-        } else {
-            // If no log file is provided, just return or log to console
-            if self.config.log_filepath.is_none() {
-                eprintln!("Log file is not configured, skipping file logging.");
-            }
         }
     }
 
@@ -163,11 +158,9 @@ impl Logger {
 
         let time = Local::now();
         let formatted_msg = format!(
-            "{}[{}] - {} - {:?} - {}\x1b[0m",
+            "{}[{}] {} \x1b[0m",
             color,
             time.format(self.config.time_format.as_str()),
-            self.config.application_name,
-            level,
             msg
         );
 

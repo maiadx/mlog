@@ -22,6 +22,7 @@ mod tests {
     fn test_default() {
 
         let log_config = LogConfig {
+            time_format : "%H:%M:%S".to_string(),
             ..Default::default()
         };
 

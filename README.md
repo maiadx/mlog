@@ -37,7 +37,7 @@ let log_config = LogConfig {
     console_flag: true,                     // toggle console logging
     async_flag: true,                     // async logger (default to false)
     multi_threaded_flag: true,           // single-threaded by default
-    time_format: "%Y-%m-%d %H:%M:%S%.3f".to_string(),  // customizable time format
+    time_format: "".to_string(),  // customizable time format
 }
 ````
 
