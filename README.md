@@ -30,11 +30,11 @@ mlog::shutdown(); // need to shutdown logger safely before exiting.
 ## Configuration
 ```rust
 let log_config = LogConfig {
-    log_level: LogLevel::Info,                 // default to logging Everything
-    program_name: "application".to_string(),  // default program name
-    log_filepath: Some("logs/example"),      // filepath for logs (alt : None will just use console)
+    log_level: LogLevel::Info,                 // defaults to logging Everything
+    program_name: "application".to_string(),  
+    log_filepath: Some("logs/example"),      // filepath for logs (default : None uses console only)
     console_flag: true,                     // toggle console logging
-    async_flag: true,                     // async logging (default to false)
+    async_flag: true,                     // async logger (default to false)
     multi_threaded_flag: true,           // single-threaded by default
     time_format: "%Y-%m-%d %H:%M:%S%.3f".to_string(),  // fully customizable time format
 }
