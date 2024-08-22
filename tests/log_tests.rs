@@ -44,7 +44,7 @@ mod tests {
     // fn test_single_threaded_non_async() {
     //     let config = LogConfig {
     //         log_level: LogLevel::Info,
-    //         program_name: "single_thread_non_async_test".to_string(),
+    //         application_name: "single_thread_non_async_test".to_string(),
     //         log_filepath: Some(get_test_log_path()),  // Write logs to a file
     //         console_flag: true,  // Enable console logging
     //         async_flag: false,   // Disable async logging
@@ -72,7 +72,7 @@ mod tests {
     // fn test_single_threaded_async() {
     //     let config = LogConfig {
     //         log_level: LogLevel::Info,
-    //         program_name: "single_thread_async_test".to_string(),
+    //         application_name: "single_thread_async_test".to_string(),
     //         log_filepath: Some(get_test_log_path()),
     //         console_flag: true,
     //         async_flag: true,  // Enable async logging
@@ -103,7 +103,7 @@ mod tests {
     // fn test_multi_threaded_non_async() {
     //     let config = LogConfig {
     //         log_level: LogLevel::Info,
-    //         program_name: "multi_thread_non_async_test".to_string(),
+    //         application_name: "multi_thread_non_async_test".to_string(),
     //         log_filepath: Some(get_test_log_path()),
     //         console_flag: true,
     //         async_flag: false,  // Non-async mode
@@ -138,7 +138,7 @@ mod tests {
     // fn test_multi_threaded_async() {
     //     let config = LogConfig {
     //         log_level: LogLevel::Info,
-    //         program_name: "multi_thread_async_test".to_string(),
+    //         application_name: "multi_thread_async_test".to_string(),
     //         log_filepath: Some(get_test_log_path()),
     //         console_flag: true,
     //         async_flag: true,  // Enable async logging
@@ -174,7 +174,7 @@ mod tests {
     // fn test_single_threaded_with_mutex() {
     //     let config = LogConfig {
     //         log_level: LogLevel::Info,
-    //         program_name: "single_thread_mutex_test".to_string(),
+    //         application_name: "single_thread_mutex_test".to_string(),
     //         log_filepath: Some(get_test_log_path()),
     //         console_flag: true,
     //         async_flag: false,
@@ -204,7 +204,7 @@ mod tests {
 
 //     let config = LogConfig {
 //         log_level: LogLevel::Info,
-//         program_name: "file_rotation_test".to_string(),
+//         application_name: "file_rotation_test".to_string(),
 //         log_filepath: Some(log_file_path.clone()),  // Log file path
 //         console_flag: false,   // Disable console logging
 //         async_flag: false,     // Disable async logging for simplicity

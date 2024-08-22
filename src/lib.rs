@@ -30,7 +30,7 @@ pub enum LogLevel {
 
 pub struct LogConfig {
     pub log_level: LogLevel,
-    pub program_name: String,
+    pub application_name: String,
     pub log_filepath: Option<String>,   // Optional log file path
     pub console_flag: bool,            // Flag to log to console
     pub async_flag: bool,             // Flag to enable async logging
@@ -43,7 +43,7 @@ impl Default for LogConfig {
     fn default() -> Self {
         LogConfig {
             log_level: LogLevel::Info,                 // Default to logging Everything
-            program_name: "default application".to_string(),  // Default program name
+            application_name: "default application".to_string(),  // Default program name
             log_filepath: None,                      // No log file by default
             console_flag: true,                     // Log to console by default
             async_flag: false,                     // No async by default
@@ -166,7 +166,7 @@ impl Logger {
             "{}[{}] - {} - {:?} - {}\x1b[0m",
             color,
             time.format(self.config.time_format.as_str()),
-            self.config.program_name,
+            self.config.application_name,
             level,
             msg
         );
@@ -265,7 +265,7 @@ impl Logger {
 // Global static pointer for logger
 static LOGGER: AtomicPtr<Logger> = AtomicPtr::new(ptr::null_mut());
 
-/* log_level, program_name, Opt<filepath>, Opt<console_flag>, Opt<async_flag>, Opt<multithreaded_flag> */
+/* log_level, application_name, Opt<filepath>, Opt<console_flag>, Opt<async_flag>, Opt<multithreaded_flag> */
 pub fn init(config: LogConfig) {
     let logger = Logger::new(config);
 
