@@ -36,7 +36,7 @@ mod tests {
         crit!("This is a critical error :/");
         success!("Operation successful :)");
 
-        // panic!("aaaaaaaaa"); // implements panic hook
+        // panic!("aaaaaaaaa"); // tests implemented panic hook
 
         shutdown();
         }
