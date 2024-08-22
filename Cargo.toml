@@ -5,3 +5,16 @@ edition = "2021"
 
 [dependencies]
 chrono = "0.4.38"
+
+[profile.dev]
+opt-level = 1
+debug = true
+
+[profile.release]
+opt-level = 3
+debug = false
+
+[profile.performance]
+inherits = "release"
+opt-level = 3
+debug = false
