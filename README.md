@@ -7,10 +7,6 @@ Supports varying log levels, colorized output, optional file logging, async mode
 ![Example Image](./tests/test-example.png)
 
 
-## Missing Features
-What's missing: currently designed for single-threaded program performance but lacks the ability to be used accross threads safely, & further optimization to make it fast
-
-
 ## Usage 
 
 ```rust
@@ -23,11 +19,12 @@ success!("Operation successful!");
 
 ## Initialization
 
-You can initialize logger with any log level
+You can initialize logger with any log level, any lower priority logs will be automatically removed
 
 ```rust
-init(LogLevel::Info, Some("logfile_name"));  // Creates "logfile_name.log"
-shutdown(); // need to shutdown logger in order to ensure all log msgs are saved exiting.
+mlog::init(log_config);
+// ...
+mlog::shutdown(); // need to shutdown logger in order to ensure all log msgs are saved exiting.
 ````
 
 ## Configuration
@@ -42,3 +39,5 @@ let log_config = LogConfig {
     time_format: "%Y-%m-%d %H:%M:%S%.3f".to_string(),  // fully customizable time format
 }
 ````
+
+Additionally, if you build with `performance` all logs that are not errors or critical errors are removed at compile time (for release builds only).

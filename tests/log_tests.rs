@@ -23,7 +23,7 @@ mod tests {
         };
 
         // Initialize the logger
-        init(log_config);
+        mlog::init(log_config);
 
 
         info!("This is an info message.");
