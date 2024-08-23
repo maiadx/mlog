@@ -16,30 +16,30 @@ mod tests {
     fn get_test_log_path() -> String {
         format!("test_log_{}.log", Local::now().timestamp())
     }
-    #[test]
-    #[allow(unreachable_code)]
+    // #[test]
+    // #[allow(unreachable_code)]
 
-    fn test_default() {
+    // fn test_default() {
 
-        let log_config = LogConfig {
-            time_format : "%H:%M:%S".to_string(),
-            ..Default::default()
-        };
+    //     let log_config = LogConfig {
+    //         time_format : "%H:%M:%S".to_string(),
+    //         ..Default::default()
+    //     };
 
-        // Initialize the logger
-        mlog::init(log_config);
+    //     // Initialize the logger
+    //     mlog::init(log_config);
 
 
-        info!("This is an info message.");
-        warn!("This is a warning.");
-        error!("Error Code : ({})", 2);
-        crit!("This is a critical error :/");
-        success!("Operation successful :)");
+    //     info!("This is an info message.");
+    //     warn!("This is a warning.");
+    //     error!("Error Code : ({})", 2);
+    //     crit!("This is a critical error :/");
+    //     success!("Operation successful :)");
 
-        // panic!("aaaaaaaaa"); // tests implemented panic hook
+    //     // panic!("aaaaaaaaa"); // tests implemented panic hook
 
-        shutdown();
-        }
+    //     shutdown();
+    //     }
     
     //     #[test]
     // fn test_single_threaded_non_async() {
@@ -68,36 +68,36 @@ mod tests {
     //     }
     // }
 
-    // // Test case for single-threaded async logger with console output enabled
-    // #[test]
-    // fn test_single_threaded_async() {
-    //     let config = LogConfig {
-    //         log_level: LogLevel::Info,
-    //         application_name: "single_thread_async_test".to_string(),
-    //         log_filepath: Some(get_test_log_path()),
-    //         console_flag: true,
-    //         async_flag: true,  // Enable async logging
-    //         multi_threaded_flag: false,  // Single-threaded mode
-    //         time_format: "%Y-%m-%d %H:%M:%S".to_string(),
-    //     };
+    // Test case for single-threaded async logger with console output enabled
+    #[test]
+    fn test_single_threaded_async() {
+        let config = LogConfig {
+            log_level: LogLevel::Info,
+            application_name: "single_thread_async_test".to_string(),
+            log_filepath: Some(get_test_log_path()),
+            console_flag: true,
+            async_flag: true,  // Enable async logging
+            multi_threaded_flag: false,  // Single-threaded mode
+            time_format: "%Y-%m-%d %H:%M:%S".to_string(),
+        };
 
-    //     let logger = Logger::new(config);
+        let logger = Logger::new(config);
 
-    //     // Log messages asynchronously
-    //     logger.log(LogLevel::Info, "This is an async info message", CONSOLE_COLOR_BLUE);
-    //     logger.log(LogLevel::Warn, "This is an async warning", CONSOLE_COLOR_YELLOW);
+        // Log messages asynchronously
+        logger.log(LogLevel::Info, "This is an async info message", CONSOLE_COLOR_BLUE);
+        logger.log(LogLevel::Warn, "This is an async warning", CONSOLE_COLOR_YELLOW);
 
-    //     // Give the async thread some time to write the log
-    //     thread::sleep(Duration::from_secs(1));
-    //     logger.flush();  // Ensure that everything is written
+        // Give the async thread some time to write the log
+        thread::sleep(Duration::from_secs(1));
+        logger.flush();  // Ensure that everything is written
 
-    //     // Check if the logs are written to the file
-    //     if let Some(ref log_filepath) = logger.config.log_filepath {
-    //         let log_contents = fs::read_to_string(log_filepath).expect("Failed to read log file");
-    //         assert!(log_contents.contains("This is an async info message"));
-    //         assert!(log_contents.contains("This is an async warning"));
-    //     }
-    // }
+        // Check if the logs are written to the file
+        if let Some(ref log_filepath) = logger.config.log_filepath {
+            let log_contents = fs::read_to_string(log_filepath).expect("Failed to read log file");
+            assert!(log_contents.contains("This is an async info message"));
+            assert!(log_contents.contains("This is an async warning"));
+        }
+    }
 
     // // Test case for multi-threaded non-async logger with console output enabled
     // #[test]

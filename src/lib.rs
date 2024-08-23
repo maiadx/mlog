@@ -12,6 +12,7 @@ use std::fs::{File, OpenOptions};
 const BUFFER_CAPACITY: usize = 15;  
 const MAX_LOG_FILE_SIZE: u64 = 10 * 1024 * 1024;  // 10 MB max log file size before rotation to new file
 
+pub const CONSOLE_COLOR_WHITE: &str = "\x1b[37m";
 pub const CONSOLE_COLOR_BLUE: &str = "\x1b[34m";
 pub const CONSOLE_COLOR_YELLOW: &str = "\x1b[01;33m";
 pub const CONSOLE_COLOR_RED: &str = "\x1b[1;31m";
@@ -118,7 +119,8 @@ impl Logger {
             let mut writer_guard = writer.lock().unwrap();
             writeln!(
                 writer_guard,
-                "\n\n----------------------------------------------------------\n///////// Session Started at {} ///////// \n----------------------------------------------------------\n",
+                "\n\n----------------------------------------------------------\n///////// {} : Session Started at {} ///////// \n----------------------------------------------------------\n",
+                logger.config.application_name,
                 Local::now().format(&logger.config.time_format)
             ).expect("Failed to write session start to log file");
             writer_guard.flush().expect("Failed to flush session start to log file");
@@ -300,7 +302,7 @@ pub fn with_logger<F: FnOnce(&Logger)>(f: F) {
 #[macro_export]
 macro_rules! info {
     ($($arg:tt)*) => {
-        with_logger(|logger| logger.log(LogLevel::Info, &format!($($arg)*), CONSOLE_COLOR_GREEN));
+        with_logger(|logger| logger.log(LogLevel::Info, &format!($($arg)*), CONSOLE_COLOR_WHITE));
     };
 }
 
