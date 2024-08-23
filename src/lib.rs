@@ -13,7 +13,7 @@ const BUFFER_CAPACITY: usize = 15;
 const MAX_LOG_FILE_SIZE: u64 = 10 * 1024 * 1024;  // 10 MB max log file size before rotation to new file
 
 pub const CONSOLE_COLOR_WHITE: &str = "\x1b[37m";
-pub const CONSOLE_COLOR_BLUE: &str = "\x1b[34m";
+pub const CONSOLE_COLOR_BLUE: &str = "\x1b[94m";
 pub const CONSOLE_COLOR_YELLOW: &str = "\x1b[01;33m";
 pub const CONSOLE_COLOR_RED: &str = "\x1b[1;31m";
 pub const CONSOLE_BG_COLOR_RED: &str = "\x1b[41m";
@@ -302,7 +302,7 @@ pub fn with_logger<F: FnOnce(&Logger)>(f: F) {
 #[macro_export]
 macro_rules! info {
     ($($arg:tt)*) => {
-        with_logger(|logger| logger.log(LogLevel::Info, &format!($($arg)*), CONSOLE_COLOR_WHITE));
+        with_logger(|logger| logger.log(LogLevel::Info, &format!($($arg)*), CONSOLE_COLOR_GREEN));
     };
 }
 
