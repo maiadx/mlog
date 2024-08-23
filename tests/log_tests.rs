@@ -84,7 +84,7 @@ mod tests {
         let logger = Logger::new(config);
 
         // Log messages asynchronously
-        logger.log(LogLevel::Info, "This is an async info message", CONSOLE_COLOR_GREEN);
+        logger.log(LogLevel::Info, "This is an async info message", CONSOLE_COLOR_BLUE);
         logger.log(LogLevel::Warn, "This is an async warning", CONSOLE_COLOR_YELLOW);
 
         // Give the async thread some time to write the log

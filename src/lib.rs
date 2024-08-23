@@ -302,7 +302,7 @@ pub fn with_logger<F: FnOnce(&Logger)>(f: F) {
 #[macro_export]
 macro_rules! info {
     ($($arg:tt)*) => {
-        with_logger(|logger| logger.log(LogLevel::Info, &format!($($arg)*), CONSOLE_COLOR_GREEN));
+        with_logger(|logger| logger.log(LogLevel::Info, &format!($($arg)*), CONSOLE_COLOR_BLUE));
     };
 }
 
