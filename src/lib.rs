@@ -15,6 +15,7 @@ const MAX_LOG_FILE_SIZE: u64 = 10 * 1024 * 1024;  // 10 MB max log file size bef
 pub const CONSOLE_COLOR_WHITE: &str = "\x1b[37m";
 pub const CONSOLE_COLOR_BLUE: &str = "\x1b[94m";
 pub const CONSOLE_COLOR_YELLOW: &str = "\x1b[01;33m";
+pub const CONSOLE_COLOR_PINK: &str = "\x1e[38;5;212m";
 pub const CONSOLE_COLOR_RED: &str = "\x1b[1;31m";
 pub const CONSOLE_BG_COLOR_RED: &str = "\x1b[41m";
 pub const CONSOLE_BG_COLOR_GREEN: &str = "\x1b[42m";
@@ -242,7 +243,6 @@ impl Logger {
         if self.config.async_flag {
             self.should_run.store(false, Ordering::Relaxed);  // Signal async thread to stop
         }
-
         
         self.flush();  // Ensure remaining logs are flushed before shutting down
         
@@ -256,7 +256,6 @@ impl Logger {
             ).expect("Failed to write session start to log file");
             writer_guard.flush().expect("Failed to flush session start to log file");
         }
-
     }
 }
 
@@ -282,7 +281,7 @@ pub fn shutdown() {
     if !logger_ptr.is_null() {
         unsafe {
             let logger: Arc<Logger> = Arc::from_raw(logger_ptr); // Convert back to Arc<Logger>
-            logger.shutdown();  // Flush and shutdown the logger
+            logger.shutdown();  // Flush and shutdown
         }
     }
 }
@@ -296,8 +295,7 @@ pub fn with_logger<F: FnOnce(&Logger)>(f: F) {
     }
 }
 
-// Macros
-// Macros with stripping in `performance` mode
+
 #[cfg(not(feature = "performance"))]
 #[macro_export]
 macro_rules! info {
@@ -358,6 +356,22 @@ macro_rules! crit {
 macro_rules! log_flush {
     () => {
         with_logger(|logger| logger.flush());
+    };
+}
+
+#[macro_export]
+macro_rules! log_assert {
+    ($cond:expr) => {
+        if !$cond {
+            crit!("Assertion failed: {}", stringify!($cond));
+            panic!("Assertion failed: {}", stringify!($cond));
+        }
+    };
+    ($cond:expr, $($arg:tt)*) => {
+        if !$cond {
+            crit!("Assertion failed: {}", format!($($arg)*));
+            panic!("Assertion failed: {}", format!($($arg)*));
+        }
     };
 }
 
