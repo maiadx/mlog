@@ -3,10 +3,10 @@ use std::sync::{Arc, Mutex};
 use std::{thread, ptr, fs};
 use std::cell::UnsafeCell;
 use std::time::Duration;
-
-use std::panic::{self};
+// use std::sync::mpsc::{self, Sender};
+use std::{io::BufWriter, io::Write};
 use chrono::Local;
-use std::io::{BufWriter, Write};
+use std::panic::{self};
 use std::fs::{File, OpenOptions};
 
 const BUFFER_CAPACITY: usize = 15;  
@@ -15,7 +15,7 @@ const MAX_LOG_FILE_SIZE: u64 = 10 * 1024 * 1024;  // 10 MB max log file size bef
 pub const CONSOLE_COLOR_WHITE: &str = "\x1b[37m";
 pub const CONSOLE_COLOR_BLUE: &str = "\x1b[94m";
 pub const CONSOLE_COLOR_YELLOW: &str = "\x1b[01;33m";
-pub const CONSOLE_COLOR_PINK: &str = "\x1e[38;5;212m";
+pub const CONSOLE_COLOR_PINK: &str = "\x1b[38;5;212m";
 pub const CONSOLE_COLOR_RED: &str = "\x1b[1;31m";
 pub const CONSOLE_BG_COLOR_RED: &str = "\x1b[41m";
 pub const CONSOLE_BG_COLOR_GREEN: &str = "\x1b[42m";
@@ -96,7 +96,7 @@ impl Logger {
         let tmp_async_flag = config.async_flag.clone();
         let tmp_mt_flag = config.multi_threaded_flag.clone();
         let tmp_log_level = config.log_level.clone();
-
+        
         
         // Initialize the logger with the configuration
         let logger = Arc::new(Logger {
@@ -118,14 +118,28 @@ impl Logger {
         // Log session start info if logging to a file
         if let Some(ref writer) = logger.file_writer {
             let mut writer_guard = writer.lock().unwrap();
-            writeln!(
-                writer_guard,
-                "\n\n----------------------------------------------------------\n///////// {} : Session Started at {} ///////// \n----------------------------------------------------------\n",
+            
+            // Format the session start text
+            let session_text = format!(
+                "///////// {} : Session Started at {} /////////",
                 logger.config.application_name,
                 Local::now().format(&logger.config.time_format)
+            );
+        
+            // Calculate the length of the `-` line based on the session text length
+            let line_length = session_text.len();
+            let separator_line = "-".repeat(line_length);
+        
+            // Write the session start with dynamic separator lines
+            writeln!(
+                writer_guard,
+                "\n\n{}\n{}\n{}\n",
+                separator_line, session_text, separator_line
             ).expect("Failed to write session start to log file");
+            
             writer_guard.flush().expect("Failed to flush session start to log file");
         }
+        
 
         // Spawn async flush thread if necessary
         if logger.config.async_flag {
@@ -197,24 +211,33 @@ impl Logger {
     }
 
 
-
-    pub fn rotate_logs(&self, mut writer: std::sync::MutexGuard<BufWriter<File>>) {
+    pub fn rotate_logs(&self, writer: &mut BufWriter<File>) {
         if let Some(ref path) = self.config.log_filepath {
             if let Ok(metadata) = fs::metadata(path) {
                 if metadata.len() > MAX_LOG_FILE_SIZE {
-                    let rotated_path = format!("{}.{}", path, Local::now().format("%Y%m%d%H%M%S"));
+                    // Ensure no race condition by locking and checking the file size again
+                    writer.flush().expect("Failed to flush before rotation");
+    
+                    // Prepare the rotated file path with a more precise timestamp to avoid conflicts
+                    let rotated_path = format!("{}.{}", path, Local::now().format("%Y%m%d%H%M%S%.3f"));
+    
+                    // Rename the current log file
                     fs::rename(path, &rotated_path).expect("Failed to rotate log file");
-
-                    // Re-open the log file
-                    let file = OpenOptions::new()
+    
+                    // Re-open the log file and replace the BufWriter within the Mutex
+                    let new_file = OpenOptions::new()
                         .create(true)
                         .append(true)
                         .open(path)
                         .expect("Failed to open new log file after rotation");
-                    *writer = BufWriter::new(file);
-
-                    writeln!(writer, "\n\n--- Log rotated at {} ---", Local::now().format("%Y-%m-%d %H:%M:%S"))
-                        .expect("Failed to write log rotation message");
+                    *writer = BufWriter::new(new_file);
+    
+                    // Write log rotation message
+                    writeln!(
+                        writer,
+                        "\n\n--- Log rotated at {} ---",
+                        Local::now().format("%Y-%m-%d %H:%M:%S%.3f")
+                    ).expect("Failed to write log rotation message");
                     writer.flush().expect("Failed to flush after log rotation");
                 }
             }
@@ -223,25 +246,38 @@ impl Logger {
 
     pub fn flush(&self) {
         if self.config.async_flag {
-            // Flush using atomic operations in async mode
-            let mut tail = self.tail.load(Ordering::Relaxed);
-            while tail != self.head.load(Ordering::Acquire) {
-                unsafe {
-                    if let Some(log_msg) = (*self.buffer[tail].get()).take() {
-                        self.write_log(&log_msg);  // Write log to file and console
-                    }
+            // In async mode, ensure atomic and thread-safe flush
+            let mut tail = self.tail.load(Ordering::Acquire); // Get the current tail position
+            let head = self.head.load(Ordering::Acquire);     // Get the current head position
+    
+            while tail != head {
+                // Load the message at the tail position atomically
+                let log_msg_opt = unsafe { (*self.buffer[tail].get()).take() };
+                
+                if let Some(log_msg) = log_msg_opt {
+                    self.write_log(&log_msg); // Write log to file and console
                 }
+    
+                // Move the tail forward in a circular manner
                 tail = (tail + 1) % BUFFER_CAPACITY;
+    
+                // Atomically store the updated tail position
                 self.tail.store(tail, Ordering::Release);
             }
-        } else if self.config.multi_threaded_flag {
-            // In multi-threaded mode, the mutex ensures thread-safe logging, so no flush is required
+        } else if !self.config.multi_threaded_flag {
+            // in multi-threaded mode, mutex ensures thread-safe logging, so no flush is required --
+            // if neither async nor multi-threaded, just flush directly
+            if let Some(ref writer) = self.file_writer {
+                let mut writer_guard = writer.lock().unwrap();
+                self.rotate_logs(&mut writer_guard);  // Check for rotation before flushing
+                writer_guard.flush().expect("Failed to flush log file");
+            }
         }
     }
 
     pub fn shutdown(&self) {
         if self.config.async_flag {
-            self.should_run.store(false, Ordering::Relaxed);  // Signal async thread to stop
+            self.should_run.store(false, Ordering::Relaxed);  // signal async thread to stop
         }
         
         self.flush();  // Ensure remaining logs are flushed before shutting down
