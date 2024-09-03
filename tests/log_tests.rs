@@ -30,13 +30,11 @@ mod tests {
 
 
         info!("This is an info message.");
+        success!("Operation successful :)");
         warn!("This is a warning.");
         error!("Error Code : ({})", 2);
         crit!("This is a critical error :/");
-        success!("Operation successful :)");
-
-        // panic!("aaaaaaaaa"); // tests implemented panic hook
-
+        mlog::log_flush!();
         shutdown();
         }
     
@@ -55,8 +53,8 @@ mod tests {
         let logger = Logger::new(config);
 
         // Perform some logging
-        logger.log(LogLevel::Info, "This is an info message", CONSOLE_COLOR_BLUE);
-        logger.log(LogLevel::Warn, "This is a warning", CONSOLE_COLOR_YELLOW);
+        logger.log(LogLevel::Info, "This is an info message", CONSOLE_COLOR_INFO);
+        logger.log(LogLevel::Warn, "This is a warning", CONSOLE_COLOR_WARN);
         logger.flush(); // Flush to make sure logs are written
 
         // Assert that the log file exists and contains the logged messages
@@ -84,7 +82,7 @@ mod tests {
 
         // Log messages asynchronously
         logger.log(LogLevel::Info, "This is an async info message", CONSOLE_COLOR_PINK);
-        logger.log(LogLevel::Warn, "This is an async warning", CONSOLE_COLOR_YELLOW);
+        logger.log(LogLevel::Warn, "This is an async warning", CONSOLE_COLOR_WARN);
 
         // Give the async thread some time to write the log
         thread::sleep(Duration::from_secs(1));
@@ -116,10 +114,10 @@ mod tests {
         // Perform logging from multiple threads
         let logger_clone = Arc::clone(&logger);
         let handle = thread::spawn(move || {
-            logger_clone.log(LogLevel::Info, "Log from thread", CONSOLE_COLOR_BLUE);
+            logger_clone.log(LogLevel::Info, "Log from thread", CONSOLE_COLOR_INFO);
         });
 
-        logger.log(LogLevel::Warn, "Log from main thread", CONSOLE_COLOR_YELLOW);
+        logger.log(LogLevel::Warn, "Log from main thread", CONSOLE_COLOR_WARN);
         handle.join().unwrap();
 
         // Flush and ensure logs are written
@@ -151,10 +149,10 @@ mod tests {
         // Perform logging from multiple threads asynchronously
         let logger_clone = Arc::clone(&logger);
         let handle = thread::spawn(move || {
-            logger_clone.log(LogLevel::Info, "Async log from thread", CONSOLE_COLOR_BLUE);
+            logger_clone.log(LogLevel::Info, "Async log from thread", CONSOLE_COLOR_INFO);
         });
 
-        logger.log(LogLevel::Warn, "Async log from main thread", CONSOLE_COLOR_YELLOW);
+        logger.log(LogLevel::Warn, "Async log from main thread", CONSOLE_COLOR_WARN);
         handle.join().unwrap();
 
         // Give the async thread time to flush logs
@@ -185,8 +183,8 @@ mod tests {
         let logger = Logger::new(config);
 
         // Log messages and ensure mutex handles the access safely
-        logger.log(LogLevel::Info, "Mutex log info message", CONSOLE_COLOR_BLUE);
-        logger.log(LogLevel::Warn, "Mutex log warning", CONSOLE_COLOR_YELLOW);
+        logger.log(LogLevel::Info, "Mutex log info message", CONSOLE_COLOR_INFO);
+        logger.log(LogLevel::Warn, "Mutex log warning", CONSOLE_COLOR_WARN);
 
         logger.flush();  // Ensure everything is written
 

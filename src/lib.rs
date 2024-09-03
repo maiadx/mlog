@@ -13,10 +13,12 @@ const BUFFER_CAPACITY: usize = 15;
 const MAX_LOG_FILE_SIZE: u64 = 10 * 1024 * 1024;  // 10 MB max log file size before rotation to new file
 
 pub const CONSOLE_COLOR_WHITE: &str = "\x1b[37m";
-pub const CONSOLE_COLOR_BLUE: &str = "\x1b[94m";
-pub const CONSOLE_COLOR_YELLOW: &str = "\x1b[01;33m";
+pub const CONSOLE_COLOR_INFO: &str = "\x1b[96m";
+pub const CONSOLE_COLOR_WARN: &str = "\x1b[38;2;255;200;120m";
 pub const CONSOLE_COLOR_PINK: &str = "\x1b[38;5;212m";
 pub const CONSOLE_COLOR_RED: &str = "\x1b[1;31m";
+pub const CONSOLE_COLOR_SUCCESS: &str = "\x1b[38;2;128;255;85m";
+pub const CONSOLE_BG_COLOR_SUCCESS: &str = "\x1b[30;48;2;128;255;85m";
 pub const CONSOLE_BG_COLOR_RED: &str = "\x1b[41m";
 pub const CONSOLE_BG_COLOR_GREEN: &str = "\x1b[42m";
 pub const CONSOLE_COLOR_RESET: &str = "\x1b[0m";
@@ -336,7 +338,7 @@ pub fn with_logger<F: FnOnce(&Logger)>(f: F) {
 #[macro_export]
 macro_rules! info {
     ($($arg:tt)*) => {
-        with_logger(|logger| logger.log(LogLevel::Info, &format!($($arg)*), CONSOLE_COLOR_BLUE));
+        with_logger(|logger| logger.log(LogLevel::Info, &format!($($arg)*), CONSOLE_COLOR_INFO));
     };
 }
 
@@ -350,7 +352,7 @@ macro_rules! info {
 #[macro_export]
 macro_rules! warn {
     ($($arg:tt)*) => {
-        with_logger(|logger| logger.log(LogLevel::Warn, &format!($($arg)*), CONSOLE_COLOR_YELLOW));
+        with_logger(|logger| logger.log(LogLevel::Warn, &format!($($arg)*), CONSOLE_COLOR_WARN));
     };
 }
 
@@ -364,7 +366,7 @@ macro_rules! warn {
 #[macro_export]
 macro_rules! success {
     ($($arg:tt)*) => {
-        with_logger(|logger| logger.log(LogLevel::Success, &format!($($arg)*), CONSOLE_BG_COLOR_GREEN));
+        with_logger(|logger| logger.log(LogLevel::Success, &format!($($arg)*), CONSOLE_BG_COLOR_SUCCESS));
     };
 }
 
@@ -377,7 +379,7 @@ macro_rules! success {
 #[macro_export]
 macro_rules! error {
     ($($arg:tt)*) => {
-        with_logger(|logger| logger.log(LogLevel::Error, &format!($($arg)*), CONSOLE_COLOR_RED));
+        with_logger(|logger| logger.log(LogLevel::Error, &format!($($arg)*), CONSOLE_COLOR_PINK));
     };
 }
 
