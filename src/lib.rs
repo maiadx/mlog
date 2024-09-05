@@ -3,7 +3,6 @@ use std::sync::{Arc, Mutex};
 use std::{thread, ptr, fs};
 use std::cell::UnsafeCell;
 use std::time::Duration;
-// use std::sync::mpsc::{self, Sender};
 use std::{io::BufWriter, io::Write};
 use chrono::Local;
 use std::panic::{self};
@@ -13,7 +12,7 @@ const BUFFER_CAPACITY: usize = 15;
 const MAX_LOG_FILE_SIZE: u64 = 10 * 1024 * 1024;  // 10 MB max log file size before rotation to new file
 
 pub const CONSOLE_COLOR_WHITE: &str = "\x1b[37m";
-pub const CONSOLE_COLOR_INFO: &str = "\x1b[96m";
+pub const CONSOLE_COLOR_INFO: &str = "\x1b[38;2;127;156;255m";
 pub const CONSOLE_COLOR_WARN: &str = "\x1b[38;2;255;200;120m";
 pub const CONSOLE_COLOR_PINK: &str = "\x1b[38;5;212m";
 pub const CONSOLE_COLOR_RED: &str = "\x1b[1;31m";
